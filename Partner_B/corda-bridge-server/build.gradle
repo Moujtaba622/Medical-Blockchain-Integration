@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://software.r3.com/artifactory/corda' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Corda RPC client + core
+    implementation 'net.corda:corda-rpc:4.12'
+    implementation 'net.corda:corda-core:4.12'
+
+    // Your CorDapp jars
+    implementation files('C:/Corda/cordapp-template-java/workflows/build/libs/workflows-0.1.jar')
+    implementation files('C:/Corda/cordapp-template-java/contracts/build/libs/contracts-0.1.jar')
+}
+
+// This is the magic part that prevents the Kotlin crash!
+configurations.all {
+    resolutionStrategy {
+        force 'org.jetbrains.kotlin:kotlin-stdlib:1.9.20'
+        force 'org.jetbrains.kotlin:kotlin-stdlib-common:1.9.20'
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

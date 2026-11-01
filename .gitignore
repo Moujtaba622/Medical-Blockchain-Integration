@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+secure_storage/
+test_data/
+
+# Corda & Java
+*.jar
+build/
+.gradle/
+out/
+.idea/
+*.iml
+
+# Node / Spring Boot
+node_modules/
+
+# Mac/Windows system files
+.DS_Store
+Thumbs.db
